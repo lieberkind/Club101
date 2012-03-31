@@ -1,3 +1,4 @@
+
 <?php
 	include("lib.php");
 
@@ -31,12 +32,11 @@
 
 		<div class="progress-bar">
 			<div class="progress-bar-inside"></div>
-			<p class="timer-seconds">53</p>
+			<p class="timer-seconds">60</p>
 		</div>
 
 		<div class="club-number">Club #<span>0</span></div>
 		<div class="current-song">Introsang</div>
-
 	</div>
 </body>
 </html>
