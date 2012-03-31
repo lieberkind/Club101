@@ -114,7 +114,7 @@ var startCountDown = function(songs, commands){
 		var commandProbability = Math.random();
 		if(timerSeconds == commandSecond){
 			console.log("Command probability: " + commandProbability);
-			//if(commandProbability < 0.3){
+			if(commandProbability < 0.3){
 
 				// decrease volume for song
 				songPlayer.setVolume(0.2);
@@ -127,7 +127,7 @@ var startCountDown = function(songs, commands){
 					songPlayer.setVolume(1)					
 					commandPlayer.stop();
 				}, 10000);
-			//}
+			}
 		}
 	}, 1000);
 }
