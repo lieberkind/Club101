@@ -1,0 +1,133 @@
+var timerSeconds = 60;
+
+
+var pissList = {
+	init: function(){
+
+	},
+	add: function(name){
+		console.log("name: " + name);
+	},
+	start: function(){
+
+	},
+	stop: function(){
+
+	}
+}
+
+/*
+/* Play object
+ ********************************************/
+var player = {
+	current: null,
+	track_number: 0,
+	playlist: [],
+
+	init: function(playlist, folder, update_label){
+		this.folder = folder;
+		this.playlist = playlist;
+		this.current = new Audio(this.folder + this.playlist[this.track_number]);
+		this.update_label = update_label;
+	},
+	start: function(){
+		this.current.play();
+	},
+	stop: function(){
+		if(this.current.paused == false){
+			this.current.pause();
+		}
+	},
+	next: function(){
+		this.stop();
+
+		// if last song restart list
+		if(this.track_number == (this.playlist.length - 1)){
+			this.track_number = 0;
+		// next song
+		}else{
+			this.track_number++;
+		}
+		
+		var filename = this.playlist[this.track_number];
+
+		// set song label
+		if(this.update_label){
+			var filename_human = filename.substring(0, filename.length - 4);
+			$('.current-song').html(filename_human);
+		}	
+
+		this.current.src = this.folder + filename;		
+		this.start();
+
+		console.log("Changed song to: " + filename);
+	},
+	setVolume: function(volume){
+		this.current.volume = volume;
+	}
+};
+
+/*
+/* Start countdown
+ ********************************************/
+var startCountDown = function(songs, commands){
+	var commandSecond;
+	var clubNumber = 0;
+
+	// create and start songplayer
+	var songPlayer = jQuery.extend(true, {}, player);
+	songPlayer.init(songs, "songs/", true);
+	songPlayer.start();
+
+	// create commandPlayer
+	var commandPlayer = jQuery.extend(true, {}, player);
+	commandPlayer.init(commands, "commands/");
+
+	// countdown 1 second
+	setInterval(function(){
+		// decrement second
+		timerSeconds--;
+		$('.timer-seconds').html(timerSeconds);
+		var progressBarWidth = (timerSeconds/60)*100;
+		$('.progress-bar-inside').css('width', progressBarWidth + '%');
+
+		// say skååål
+		if(timerSeconds == 3){
+
+		}
+
+		// new song
+		if(timerSeconds == 0){
+			songPlayer.next();
+			timerSeconds = 60;
+
+			// set command at random second in time number
+			commandSecond = Math.floor(37*Math.random()) + 13;
+			console.log("Command will be played at " + commandSecond);
+
+			// update club number
+			clubNumber++;
+			$('.club-number span').html(clubNumber);
+		}		
+
+		// attempt to play command
+		var commandProbability = Math.random();
+		if(timerSeconds == commandSecond){
+			console.log("Command probability: " + commandProbability);
+			//if(commandProbability < 0.3){
+
+				// decrease volume for song
+				songPlayer.setVolume(0.2);
+
+				// play command
+				commandPlayer.next();
+
+				// increase volume again for song
+				setTimeout(function(){
+					songPlayer.setVolume(1)					
+					commandPlayer.stop();
+				}, 10000);
+			//}
+		}
+	}, 1000);
+}
