@@ -1,18 +1,23 @@
 class @Club  
-  constructor: (songs, commands) ->
+  constructor: (songs, commands, cheers) ->
     @commandProbability = 0.3 # higher means more often commands
     @clubNumber = 0 # the club to start from
     @setTimerSeconds 60 # number of seconds per club
     @paused = true # pause from beginning
 
-    # create song player
+    # setup players
     @songPlayer = new SongPlayer('songs/', songs);
-
-    # create command player
     @commandPlayer = new CommandPlayer('commands/', commands);
+    @cheersPlayer = new CheersPlayer('cheers/', cheers);
     
     # bind events
-    $('.controls').click => @toggleControls()
+    $( ".controls" )
+    .button
+      text: false 
+      icons:
+        primary: "ui-icon-play"
+    .click => @toggleControls()
+
 
     # countdown every second
     setInterval (=>
@@ -22,8 +27,8 @@ class @Club
       # decrement second by one and update UI accordingly
       @decrementSecond()
 
-      #if @timerSeconds is 3
-        # skåål
+      # say cheers!
+      @cheersPlayer.next() if @timerSeconds is 1        
 
       # end of song; change to next
       if @timerSeconds is 0
@@ -84,10 +89,14 @@ class @Club
     @paused = true
     @songPlayer.pause()
 
-  toggleControls: ->
-    $('.controls *').toggle();
-
+  toggleControls: ->          
     if @paused is true
+      $( ".controls" ).button
+        icons:
+          primary: "ui-icon-pause"
       @resume()
     else
+      $( ".controls" ).button
+        icons:
+          primary: "ui-icon-play"
       @pause()

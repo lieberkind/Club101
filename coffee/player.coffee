@@ -68,3 +68,5 @@ class @CommandPlayer extends Player
         # start next song
         @start()
     ), 1
+
+class @CheersPlayer extends Player

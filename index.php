@@ -4,6 +4,7 @@
 	// get list of files
 	$commands = readFolder("commands");	
 	$songs = readFolder("songs");
+	$cheers = readFolder("cheers");
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +13,15 @@
 	<title></title>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
+	<link rel="stylesheet" href="stylesheets/south-street/jquery-ui-1.8.18.custom.css">	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="coffee/player.js"></script>	
-	<script src="coffee/club.js"></script>				
+	<script src="js/jquery-ui-1.8.18.custom.min.js"></script>	
+	<script src="js/player.js"></script>	
+	<script src="js/club.js"></script>				
 	<script type="text/javascript">
 		var club;
 		$(document).ready(function() {
-			club = new Club(<?php echo $songs ?>, <?php echo $commands ?>);
-
+			club = new Club(<?php echo $songs ?>, <?php echo $commands ?>, <?php echo $cheers ?>);
 		});	
 	</script>
 </head>
@@ -27,10 +29,10 @@
 	<div class="container">
 
 		<h1 class="title">Club 101</h1>
-		<p class="sub-title">En club sejere</p>
-		<div class="controls"><span>Resume</span> <span style="display:none">pause</span></div>
+		<p class="sub-title">En club sejere</p>		
 
 		<div class="progress-bar">
+			<p class="controls"></p>
 			<div class="progress-bar-inside"></div>
 			<p class="timer-seconds">60</p>
 		</div>

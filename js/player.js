@@ -98,4 +98,16 @@
 
   })(Player);
 
+  this.CheersPlayer = (function(_super) {
+
+    __extends(CheersPlayer, _super);
+
+    function CheersPlayer() {
+      CheersPlayer.__super__.constructor.apply(this, arguments);
+    }
+
+    return CheersPlayer;
+
+  })(Player);
+
 }).call(this);

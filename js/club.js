@@ -2,7 +2,7 @@
 
   this.Club = (function() {
 
-    function Club(songs, commands) {
+    function Club(songs, commands, cheers) {
       var _this = this;
       this.commandProbability = 0.3;
       this.clubNumber = 0;
@@ -10,12 +10,19 @@
       this.paused = true;
       this.songPlayer = new SongPlayer('songs/', songs);
       this.commandPlayer = new CommandPlayer('commands/', commands);
-      $('.controls').click(function() {
+      this.cheersPlayer = new CheersPlayer('cheers/', cheers);
+      $(".controls").button({
+        text: false,
+        icons: {
+          primary: "ui-icon-play"
+        }
+      }).click(function() {
         return _this.toggleControls();
       });
       setInterval((function() {
         if (_this.paused) return false;
         _this.decrementSecond();
+        if (_this.timerSeconds === 1) _this.cheersPlayer.next();
         if (_this.timerSeconds === 0) {
           _this.songPlayer.next();
           _this.setTimerSeconds(60);
@@ -79,10 +86,19 @@
     };
 
     Club.prototype.toggleControls = function() {
-      $('.controls *').toggle();
       if (this.paused === true) {
+        $(".controls").button({
+          icons: {
+            primary: "ui-icon-pause"
+          }
+        });
         return this.resume();
       } else {
+        $(".controls").button({
+          icons: {
+            primary: "ui-icon-play"
+          }
+        });
         return this.pause();
       }
     };

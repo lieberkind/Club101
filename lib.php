@@ -1,10 +1,6 @@
 <?php
-function readFolder($type){
-	if($type == "commands"){
-		$files = scandir("commands/");
-	}else{
-		$files = scandir("songs/");
-	}
+function readFolder($folder){
+	$files = scandir($folder ."/");
 	$key_parent_dir = array_search("..", $files);
 	$key_current_dir = array_search(".", $files);		
 	unset($files[$key_current_dir]);
