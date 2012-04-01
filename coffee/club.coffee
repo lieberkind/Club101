@@ -1,9 +1,12 @@
 class @Club  
   constructor: (songs, commands, cheers) ->
+    # options
     @commandProbability = 0.3 # higher means more often commands
-    @clubNumber = 0 # the club to start from
-    @setTimerSeconds 60 # number of seconds per club
-    @paused = true # pause from beginning
+    @secondsPerClub = 60 # number of seconds per club
+
+    # initial setup
+    @clubNumber = 0 # the club to start from    
+    @setTimerSeconds @secondsPerClub
 
     # setup players
     @songPlayer = new SongPlayer('songs/', songs);
@@ -18,11 +21,15 @@ class @Club
         primary: "ui-icon-play"
     .click => @toggleControls()
 
-
     # countdown every second
     setInterval (=>
       
-      return false if @paused
+      return false if @songPlayer.current.paused
+
+      if @clubNumber > 100
+        $( ".controls" ).button "disable"
+        @pause()
+        alert "Er du fuld nu?"
 
       # decrement second by one and update UI accordingly
       @decrementSecond()
@@ -33,7 +40,7 @@ class @Club
       # end of song; change to next
       if @timerSeconds is 0
         @songPlayer.next()
-        @setTimerSeconds 60
+        @setTimerSeconds @secondsPerClub
         @setCommand()
         @incrementClubNumber()
       
@@ -44,7 +51,7 @@ class @Club
 
         # play command
         @commandPlayer.next( (duration) =>
-          console.log "Duration from screen: " + duration
+          
           # increase volume for song again and pause command
           setTimeout ( =>
             @songPlayer.setVolume 1
@@ -59,7 +66,7 @@ class @Club
   decrementSecond: ->
     # calculations
     @timerSeconds--
-    progressBarWidth = (@timerSeconds / 60) * 100    
+    progressBarWidth = (@timerSeconds / @secondsPerClub) * 100    
     
     # UI
     $(".timer-seconds").html @timerSeconds    
@@ -82,21 +89,21 @@ class @Club
       console.log "Command will NOT be played"
 
   resume: ->
-    @paused = false
+    $( ".controls" ).button
+      icons:
+        primary: "ui-icon-pause"
+
     @songPlayer.start()
 
   pause: ->    
-    @paused = true
+    $( ".controls" ).button
+      icons:
+        primary: "ui-icon-play"
+
     @songPlayer.pause()
 
   toggleControls: ->          
-    if @paused is true
-      $( ".controls" ).button
-        icons:
-          primary: "ui-icon-pause"
+    if @songPlayer.current.paused is true
       @resume()
-    else
-      $( ".controls" ).button
-        icons:
-          primary: "ui-icon-play"
+    else      
       @pause()

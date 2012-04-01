@@ -5,9 +5,9 @@
     function Club(songs, commands, cheers) {
       var _this = this;
       this.commandProbability = 0.3;
+      this.secondsPerClub = 60;
       this.clubNumber = 0;
-      this.setTimerSeconds(60);
-      this.paused = true;
+      this.setTimerSeconds(this.secondsPerClub);
       this.songPlayer = new SongPlayer('songs/', songs);
       this.commandPlayer = new CommandPlayer('commands/', commands);
       this.cheersPlayer = new CheersPlayer('cheers/', cheers);
@@ -20,19 +20,23 @@
         return _this.toggleControls();
       });
       setInterval((function() {
-        if (_this.paused) return false;
+        if (_this.songPlayer.current.paused) return false;
+        if (_this.clubNumber > 100) {
+          $(".controls").button("disable");
+          _this.pause();
+          alert("Er du fuld nu?");
+        }
         _this.decrementSecond();
         if (_this.timerSeconds === 1) _this.cheersPlayer.next();
         if (_this.timerSeconds === 0) {
           _this.songPlayer.next();
-          _this.setTimerSeconds(60);
+          _this.setTimerSeconds(_this.secondsPerClub);
           _this.setCommand();
           _this.incrementClubNumber();
         }
         if (_this.timerSeconds === _this.commandSecond && _this.commandSecond > 0) {
           _this.songPlayer.setVolume(0.2);
           return _this.commandPlayer.next(function(duration) {
-            console.log("Duration from screen: " + duration);
             return setTimeout((function() {
               _this.songPlayer.setVolume(1);
               return _this.commandPlayer.pause();
@@ -49,7 +53,7 @@
     Club.prototype.decrementSecond = function() {
       var progressBarWidth;
       this.timerSeconds--;
-      progressBarWidth = (this.timerSeconds / 60) * 100;
+      progressBarWidth = (this.timerSeconds / this.secondsPerClub) * 100;
       $(".timer-seconds").html(this.timerSeconds);
       return $(".progress-bar-inside").css("width", progressBarWidth + "%");
     };
@@ -76,29 +80,27 @@
     };
 
     Club.prototype.resume = function() {
-      this.paused = false;
+      $(".controls").button({
+        icons: {
+          primary: "ui-icon-pause"
+        }
+      });
       return this.songPlayer.start();
     };
 
     Club.prototype.pause = function() {
-      this.paused = true;
+      $(".controls").button({
+        icons: {
+          primary: "ui-icon-play"
+        }
+      });
       return this.songPlayer.pause();
     };
 
     Club.prototype.toggleControls = function() {
-      if (this.paused === true) {
-        $(".controls").button({
-          icons: {
-            primary: "ui-icon-pause"
-          }
-        });
+      if (this.songPlayer.current.paused === true) {
         return this.resume();
       } else {
-        $(".controls").button({
-          icons: {
-            primary: "ui-icon-play"
-          }
-        });
         return this.pause();
       }
     };

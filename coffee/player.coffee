@@ -3,11 +3,11 @@ class Player
     @track_number = 0
     @current = new Audio(@folder + @playlist[@track_number])
 
-  start: ->
+  start: -> 
     @current.play()
 
   pause: ->
-    @current.pause()  if @current.paused is false
+    @current.pause() if @current.paused is false      
 
   next: (callback) ->
     # pause current track
@@ -25,6 +25,7 @@ class Player
     # set track source
     @current.src = @folder + filename
 
+    # start
     @start()
     console.log "Changed track to: " + filename    
 
@@ -32,6 +33,7 @@ class Player
     console.log "Volume change to: #{volume} "
     @current.volume = volume
 
+# songplayer with specific label
 class @SongPlayer extends Player
   setLabel: (filename) ->
     filename_human = filename.substring(0, filename.length - 4)
@@ -40,6 +42,7 @@ class @SongPlayer extends Player
     super
     @setLabel @playlist[@track_number]
 
+# commandplayer with own implementation of next for returning duration in a callback
 class @CommandPlayer extends Player
   next: (callback) ->
     # pause current track
@@ -62,7 +65,7 @@ class @CommandPlayer extends Player
       if @current.duration > 0
         clearInterval(preload)
 
-        # 
+        # return duration of command to Club()
         callback(@current.duration)
 
         # start next song
