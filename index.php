@@ -1,4 +1,3 @@
-
 <?php
 	include("lib.php");
 
@@ -14,12 +13,12 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="screen.js"></script>
+	<script src="coffee/player.js"></script>	
+	<script src="coffee/club.js"></script>				
 	<script type="text/javascript">
-
+		var club;
 		$(document).ready(function() {
-			startCountDown(<?php echo $songs ?>, <?php echo $commands ?>);
-			pissList.init();
+			club = new Club(<?php echo $songs ?>, <?php echo $commands ?>);
 
 		});	
 	</script>
@@ -29,6 +28,7 @@
 
 		<h1 class="title">Club 101</h1>
 		<p class="sub-title">En club sejere</p>
+		<div class="controls"><span>Resume</span> <span style="display:none">pause</span></div>
 
 		<div class="progress-bar">
 			<div class="progress-bar-inside"></div>

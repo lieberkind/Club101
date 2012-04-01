@@ -1,3 +1,2 @@
-!.sass-cache/*
-!songs/*
-!commands/*
+.sass-cache/
+songs/

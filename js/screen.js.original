@@ -38,6 +38,12 @@ var player = {
 			this.current.pause();
 		}
 	},
+	setLabel: function(filename){
+		if(this.update_label){
+			var filename_human = filename.substring(0, filename.length - 4);
+			$('.current-song').html(filename_human);
+		}			
+	},
 	next: function(){
 		this.stop();
 
@@ -49,13 +55,11 @@ var player = {
 			this.track_number++;
 		}
 		
+		// set filename
 		var filename = this.playlist[this.track_number];
 
-		// set song label
-		if(this.update_label){
-			var filename_human = filename.substring(0, filename.length - 4);
-			$('.current-song').html(filename_human);
-		}	
+		// set label
+		setLabel(filename);
 
 		this.current.src = this.folder + filename;		
 		this.start();
@@ -110,10 +114,10 @@ var startCountDown = function(songs, commands){
 			$('.club-number span').html(clubNumber);
 		}		
 
-		// attempt to play command
+		// play command depending on probability
 		var commandProbability = Math.random();
-		if(timerSeconds == commandSecond){
-			console.log("Command probability: " + commandProbability);
+		console.log("Command probability: " + commandProbability);
+		if(timerSeconds == commandSecond){			
 			if(commandProbability < 0.3){
 
 				// decrease volume for song
