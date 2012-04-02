@@ -57,7 +57,7 @@ a img {
   border: none;
 }
 
-/* line 17, ../sass/screen.sass */
+/* line 21, ../sass/screen.sass */
 body.bp {
   line-height: 1.5;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -378,7 +378,7 @@ body.bp .removed {
   color: white;
 }
 
-/* line 25, ../sass/screen.sass */
+/* line 29, ../sass/screen.sass */
 .container {
   width: 920px;
   margin: 0 auto;
@@ -387,7 +387,7 @@ body.bp .removed {
   min-height: 500px;
   padding-top: 100px;
 }
-/* line 31, ../sass/screen.sass */
+/* line 35, ../sass/screen.sass */
 .container .title {
   color: #cccccc;
   font-size: 7em;
@@ -398,7 +398,7 @@ body.bp .removed {
   text-transform: uppercase;
   width: 100%;
 }
-/* line 41, ../sass/screen.sass */
+/* line 45, ../sass/screen.sass */
 .container .sub-title {
   color: #cccccc;
   font-size: 4em;
@@ -408,10 +408,9 @@ body.bp .removed {
   width: 100%;
 }
 
-/* line 49, ../sass/screen.sass */
+/* line 53, ../sass/screen.sass */
 .progress-bar {
   box-sizing: border-box;
-  border: 3px solid black;
   display: inline;
   float: left;
   margin-right: 0;
@@ -425,28 +424,42 @@ body.bp .removed {
 * html .progress-bar {
   overflow-x: hidden;
 }
-/* line 58, ../sass/screen.sass */
+/* line 62, ../sass/screen.sass */
 .progress-bar .controls {
   height: 25px;
   margin: 10px;
   z-index: 2;
 }
-/* line 63, ../sass/screen.sass */
+/* line 67, ../sass/screen.sass */
 .progress-bar .progress-bar-inside {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #00c000), color-stop(100%, #008000));
-  background: -webkit-linear-gradient(top, #00c000, #008000);
-  background: -moz-linear-gradient(top, #00c000, #008000);
-  background: -o-linear-gradient(top, #00c000, #008000);
-  background: -ms-linear-gradient(top, #00c000, #008000);
-  background: linear-gradient(top, #00c000, #008000);
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #84a5c2), color-stop(100%, #37648c));
+  background: -webkit-linear-gradient(left, #84a5c2, #37648c);
+  background: -moz-linear-gradient(left, #84a5c2, #37648c);
+  background: -o-linear-gradient(left, #84a5c2, #37648c);
+  background: -ms-linear-gradient(left, #84a5c2, #37648c);
+  background: linear-gradient(left, #84a5c2, #37648c);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
+  -moz-transition-property: width;
+  -webkit-transition-property: width;
+  -o-transition-property: width;
+  transition-property: width;
+  -moz-transition-duration: 1s;
+  -webkit-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
 }
-/* line 72, ../sass/screen.sass */
+/* line 78, ../sass/screen.sass */
 .progress-bar .timer-seconds {
   display: inline;
   float: left;
@@ -469,19 +482,27 @@ body.bp .removed {
 * html .progress-bar .timer-seconds {
   overflow-x: hidden;
 }
+/* line 93, ../sass/screen.sass */
+.progress-bar .songUpload {
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  width: 90px;
+  z-index: 2;
+}
 
-/* line 87, ../sass/screen.sass */
+/* line 100, ../sass/screen.sass */
 .club-number, .current-song {
   color: #666666;
   font-size: 2em;
 }
 
-/* line 91, ../sass/screen.sass */
+/* line 104, ../sass/screen.sass */
 .club-number {
   float: left;
 }
 
-/* line 94, ../sass/screen.sass */
+/* line 107, ../sass/screen.sass */
 .current-song {
   float: right;
 }

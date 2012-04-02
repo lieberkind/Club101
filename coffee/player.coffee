@@ -1,7 +1,13 @@
 class Player
-  constructor: (@folder, @playlist) ->
+  constructor: (@playlist) ->
     @track_number = 0
-    @current = new Audio(@folder + @playlist[@track_number])
+    @current = new Audio(@playlist[@track_number])
+
+  addToPlaylist: (file) ->
+    @playlist.push file
+
+  #(re)set playlist
+  setPlaylist: (@playlist = []) ->
 
   start: -> 
     @current.play()
@@ -19,11 +25,11 @@ class Player
     else
       @track_number++
 
-    # set filename
+    # define filename
     filename = @playlist[@track_number]
 
     # set track source
-    @current.src = @folder + filename
+    @current.src = filename
 
     # start
     @start()
@@ -36,13 +42,15 @@ class Player
 # songplayer with specific label
 class @SongPlayer extends Player
   setLabel: (filename) ->
-    filename_human = filename.substring(0, filename.length - 4)
+    firstSlashPos = filename.indexOf("/") + 1
+    lastDotPos = filename.lastIndexOf(".")
+    filename_human = filename.substring(firstSlashPos, lastDotPos)
     $(".current-song").html filename_human
   next: (callback) ->
     super
-    @setLabel @playlist[@track_number]
+    @setLabel @playlist[@track_number]  
 
-# commandplayer with own implementation of next for returning duration in a callback
+# commandplayer with new implementation of next for returning duration in a callback
 class @CommandPlayer extends Player
   next: (callback) ->
     # pause current track
@@ -54,11 +62,11 @@ class @CommandPlayer extends Player
     else
       @track_number++
 
-    # set filename
+    # define filename
     filename = @playlist[@track_number]
 
     # set track source
-    @current.src = @folder + filename
+    @current.src = filename
 
     # preloading: wait for duration
     preload = setInterval (=>
