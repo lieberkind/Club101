@@ -469,19 +469,26 @@ body.bp .removed {
 * html .progress-bar .timer-seconds {
   overflow-x: hidden;
 }
-
 /* line 87, ../sass/screen.sass */
+.progress-bar .songUpload {
+  position: absolute;
+  bottom: 0px;
+  margin: 10px;
+  z-index: 2;
+}
+
+/* line 93, ../sass/screen.sass */
 .club-number, .current-song {
   color: #666666;
   font-size: 2em;
 }
 
-/* line 91, ../sass/screen.sass */
+/* line 97, ../sass/screen.sass */
 .club-number {
   float: left;
 }
 
-/* line 94, ../sass/screen.sass */
+/* line 100, ../sass/screen.sass */
 .current-song {
   float: right;
 }

@@ -5,12 +5,19 @@
 
   Player = (function() {
 
-    function Player(folder, playlist) {
-      this.folder = folder;
+    function Player(playlist) {
       this.playlist = playlist;
       this.track_number = 0;
-      this.current = new Audio(this.folder + this.playlist[this.track_number]);
+      this.current = new Audio(this.playlist[this.track_number]);
     }
+
+    Player.prototype.addToPlaylist = function(file) {
+      return this.playlist.push(file);
+    };
+
+    Player.prototype.setPlaylist = function(playlist) {
+      this.playlist = playlist != null ? playlist : [];
+    };
 
     Player.prototype.start = function() {
       return this.current.play();
@@ -29,7 +36,7 @@
         this.track_number++;
       }
       filename = this.playlist[this.track_number];
-      this.current.src = this.folder + filename;
+      this.current.src = filename;
       this.start();
       return console.log("Changed track to: " + filename);
     };
@@ -52,8 +59,10 @@
     }
 
     SongPlayer.prototype.setLabel = function(filename) {
-      var filename_human;
-      filename_human = filename.substring(0, filename.length - 4);
+      var filename_human, firstSlashPos, lastDotPos;
+      firstSlashPos = filename.indexOf("/") + 1;
+      lastDotPos = filename.lastIndexOf(".");
+      filename_human = filename.substring(firstSlashPos, lastDotPos);
       return $(".current-song").html(filename_human);
     };
 
@@ -84,7 +93,7 @@
         this.track_number++;
       }
       filename = this.playlist[this.track_number];
-      this.current.src = this.folder + filename;
+      this.current.src = filename;
       return preload = setInterval((function() {
         if (_this.current.duration > 0) {
           clearInterval(preload);

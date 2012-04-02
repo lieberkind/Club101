@@ -9,17 +9,26 @@ class @Club
     @setTimerSeconds @secondsPerClub
 
     # setup players
-    @songPlayer = new SongPlayer('songs/', songs);
-    @commandPlayer = new CommandPlayer('commands/', commands);
-    @cheersPlayer = new CheersPlayer('cheers/', cheers);
+    @songPlayer = new SongPlayer(songs);
+    @commandPlayer = new CommandPlayer(commands);
+    @cheersPlayer = new CheersPlayer(cheers);
     
     # bind events
-    $( ".controls" )
-    .button
+    $( ".controls" ).button
       text: false 
       icons:
         primary: "ui-icon-play"
     .click => @toggleControls()
+
+    $(".songUpload").change =>
+      console.log("uploaded")
+      # reset playlist
+      @songPlayer.setPlaylist()
+
+      # add local songs to playlist
+      files = $(".songUpload")[0].files      
+      window.URL = window.webkitURL if (window.webkitURL)
+      @songPlayer.addToPlaylist window.URL.createObjectURL(file) for file in files    
 
     # countdown every second
     setInterval (=>

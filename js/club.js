@@ -8,9 +8,9 @@
       this.secondsPerClub = 60;
       this.clubNumber = 0;
       this.setTimerSeconds(this.secondsPerClub);
-      this.songPlayer = new SongPlayer('songs/', songs);
-      this.commandPlayer = new CommandPlayer('commands/', commands);
-      this.cheersPlayer = new CheersPlayer('cheers/', cheers);
+      this.songPlayer = new SongPlayer(songs);
+      this.commandPlayer = new CommandPlayer(commands);
+      this.cheersPlayer = new CheersPlayer(cheers);
       $(".controls").button({
         text: false,
         icons: {
@@ -18,6 +18,19 @@
         }
       }).click(function() {
         return _this.toggleControls();
+      });
+      $(".songUpload").change(function() {
+        var file, files, _i, _len, _results;
+        console.log("uploaded");
+        _this.songPlayer.setPlaylist();
+        files = $(".songUpload")[0].files;
+        if (window.webkitURL) window.URL = window.webkitURL;
+        _results = [];
+        for (_i = 0, _len = files.length; _i < _len; _i++) {
+          file = files[_i];
+          _results.push(_this.songPlayer.addToPlaylist(window.URL.createObjectURL(file)));
+        }
+        return _results;
       });
       setInterval((function() {
         if (_this.songPlayer.current.paused) return false;

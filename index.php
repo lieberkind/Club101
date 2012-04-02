@@ -6,7 +6,6 @@
 	$songs = readFolder("songs");
 	$cheers = readFolder("cheers");
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
 	<link rel="stylesheet" href="stylesheets/south-street/jquery-ui-1.8.18.custom.css">	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="js/jquery-ui-1.8.18.custom.min.js"></script>	
+	<script src="js/jquery-ui-1.8.18.custom.min.js"></script>
 	<script src="js/player.js"></script>	
-	<script src="js/club.js"></script>				
+	<script src="js/club.js"></script>
+	<script src="js/screen.js"></script>	
 	<script type="text/javascript">
 		var club;
 		$(document).ready(function() {
@@ -35,6 +35,7 @@
 			<p class="controls"></p>
 			<div class="progress-bar-inside"></div>
 			<p class="timer-seconds">60</p>
+			<input type="file" class="songUpload" multiple="multiple" />
 		</div>
 
 		<div class="club-number">Club #<span>0</span></div>
