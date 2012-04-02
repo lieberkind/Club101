@@ -13,22 +13,8 @@ class @Club
     @commandPlayer = new CommandPlayer(commands);
     @cheersPlayer = new CheersPlayer(cheers);
     
-    # bind events
-    $( ".controls" ).button
-      text: false 
-      icons:
-        primary: "ui-icon-play"
-    .click => @toggleControls()
-
-    $(".songUpload").change =>
-      console.log("uploaded")
-      # reset playlist
-      @songPlayer.setPlaylist()
-
-      # add local songs to playlist
-      files = $(".songUpload")[0].files      
-      window.URL = window.webkitURL if (window.webkitURL)
-      @songPlayer.addToPlaylist window.URL.createObjectURL(file) for file in files    
+    # bind functions to DOM events
+    @domBind()
 
     # countdown every second
     setInterval (=>
@@ -116,3 +102,21 @@ class @Club
       @resume()
     else      
       @pause()
+
+  domBind: ->
+    $( ".controls" ).button
+      text: false 
+      icons:
+        primary: "ui-icon-play"
+    .click => @toggleControls()
+
+    $(".songUpload").change =>
+      $(".songUpload").fadeOut();
+      console.log("uploaded")
+      # reset playlist
+      @songPlayer.setPlaylist()
+
+      # add local songs to playlist
+      files = $(".songUpload")[0].files      
+      window.URL = window.webkitURL if (window.webkitURL)
+      @songPlayer.addToPlaylist window.URL.createObjectURL(file) for file in files       
