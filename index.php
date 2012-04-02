@@ -12,7 +12,7 @@
 	<title></title>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
-	<link rel="stylesheet" href="stylesheets/south-street/jquery-ui-1.8.18.custom.css">	
+	<link rel="stylesheet" href="stylesheets/ui-darkness/jquery-ui-1.8.18.custom.css">	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="js/jquery-ui-1.8.18.custom.min.js"></script>
 	<script src="js/player.js"></script>	

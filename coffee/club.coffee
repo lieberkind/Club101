@@ -104,15 +104,18 @@ class @Club
       @pause()
 
   domBind: ->
+    # music controller: jQueryUI button style
     $( ".controls" ).button
       text: false 
       icons:
         primary: "ui-icon-play"
     .click => @toggleControls()
 
+    # add local files to playlist
     $(".songUpload").change =>
       $(".songUpload").fadeOut();
       console.log("uploaded")
+
       # reset playlist
       @songPlayer.setPlaylist()
 
